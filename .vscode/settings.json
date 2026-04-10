@@ -5,7 +5,8 @@
     "source.fixAll.stylelint": "explicit"
   },
   "eslint.validate": [
-    "javascript"
+    "javascript",
+    "typescript",
   ],
   "stylelint.validate": [
     "css",

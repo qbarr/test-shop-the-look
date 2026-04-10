@@ -1,10 +1,4 @@
 {
-  "src/entrypoints/theme.js": {
-    "file": "theme-DeoacA2U.js",
-    "name": "theme",
-    "src": "src/entrypoints/theme.js",
-    "isEntry": true
-  },
   "src/entrypoints/theme.scss": {
     "file": "theme-n5bczW0d.css",
     "name": "theme",
@@ -12,6 +6,12 @@
       "theme.css"
     ],
     "src": "src/entrypoints/theme.scss",
+    "isEntry": true
+  },
+  "src/entrypoints/theme.ts": {
+    "file": "theme-34KX3wHy.js",
+    "name": "theme",
+    "src": "src/entrypoints/theme.ts",
     "isEntry": true
   }
 }

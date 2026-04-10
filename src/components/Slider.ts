@@ -1,6 +1,12 @@
 import { bindMethod } from '@/helpers/bind'
 import Component from '@/navigation/Component'
 
+type SliderRefs = {
+  prevButton?: HTMLButtonElement
+  nextButton?: HTMLButtonElement
+  track?: HTMLElement
+}
+
 /*
  * Slider — composant de navigation horizontal minimaliste.
  *
@@ -11,7 +17,8 @@ import Component from '@/navigation/Component'
  *
  */
 const EDGE_TOLERANCE = 10
-class Slider extends Component {
+
+class Slider extends Component<{ refs: SliderRefs }> {
   initialized () {
     this.bindRefs()
     this.bindEvents()
@@ -30,8 +37,9 @@ class Slider extends Component {
     this.updateControls()
   }
 
-  goToSlide (direction) {
+  goToSlide (direction: number) {
     const track = this.refs.track
+
     if (!track) return
 
     const maxScrollLeft = Math.max(track.scrollWidth - track.clientWidth, 0)
@@ -48,6 +56,7 @@ class Slider extends Component {
 
   updateControls (scrollLeft = this.refs.track?.scrollLeft ?? 0) {
     const track = this.refs.track
+
     if (!track) return
 
     const isAtStart = scrollLeft <= EDGE_TOLERANCE
@@ -57,7 +66,7 @@ class Slider extends Component {
     this.setButtonState(this.refs.nextButton, isAtEnd)
   }
 
-  setButtonState (button, isDisabled) {
+  setButtonState (button: HTMLButtonElement | undefined, isDisabled: boolean) {
     if (!(button instanceof HTMLButtonElement)) return
 
     button.disabled = isDisabled

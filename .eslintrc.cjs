@@ -1,13 +1,16 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
   extends: [
     'standard'
   ],
   plugins: [
-    'import'
+    'import',
+    '@typescript-eslint'
   ],
   settings: {
     'import/core-modules': [
-      'prop-types'
+      'prop-types',
+      'react-dom'
     ],
     'import/resolver': {
       node: {

@@ -1,4 +1,4 @@
-import Component from './Component'
+import Component, { BaseComponentType } from './Component'
 
 import modulesMap from '@/core/modulesMap'
 
@@ -7,9 +7,22 @@ import modulesMap from '@/core/modulesMap'
   - Hérite de Component et gère les modules spécifiques à la page
   - Minimale et très simplifé dans le cadre du test
 */
+export interface IPage {
+  el: HTMLElement
+  flush: () => void
+}
 
-class Page extends Component {
-  constructor (el, options) {
+export interface IPageClass {
+  pageName?: string
+  new (el: HTMLElement, options?: any): IPage
+}
+
+class Page<
+  Type extends BaseComponentType = BaseComponentType
+> extends Component<Type> implements IPage {
+  static pageName = 'Page'
+
+  constructor (el : HTMLElement, options?: Type['options']) {
     super(el, options)
 
     // Initialisation des références DOM et des modules
@@ -27,7 +40,5 @@ class Page extends Component {
     this.invoke('flush')
   }
 }
-
-Page.pageName = 'Page'
 
 export default Page

@@ -1,5 +1,5 @@
 import pageMap from './core/pageMap'
-import Page from './navigation/Page'
+import Page, { IPage } from './navigation/Page'
 
 import Component from '@/navigation/Component'
 /*
@@ -9,7 +9,13 @@ import Component from '@/navigation/Component'
   - Ajoute les modules permanents de l'application
   - Effectue un resize initial pour la page et tous les modules
 */
-class App extends Component {
+type AppRefs = {
+  page?: HTMLElement
+}
+
+class App extends Component<{ refs: AppRefs }> {
+  page: IPage
+
   initialized () {
     this.bindRefs()
     this.initializePage()
@@ -20,7 +26,6 @@ class App extends Component {
     const pageClassName = this.refs.page?.getAttribute('data-template') || ''
     const PageClass = pageMap[pageClassName] || Page
 
-    this.pageName = PageClass.pageName
     this.page = new PageClass(this.refs.page)
   }
 }

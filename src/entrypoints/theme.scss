@@ -1,11 +1,11 @@
 /*
  Je regroupe tout dans le bundle global dans le cadre du test.
 
-Idéalement, j’aurais importé chaque fichier SCSS dans le JS correspondant
+J'aurais normalement importé chaque fichier SCSS dans le JS correspondant
  --> Ne pas alourdir le css de chaque page 
- --> Gérer les pages en AJAX avec un système de show/hide
+ --> Nécessite de gérer les pages en AJAX avec un système de show/hide
 
-Je préfère éviter de tout mettre dans le stylesheet Liquid, car je trouve cela difficile à maintenir.
+Je préfère éviter de tout mettre dans le stylesheet Liquid, car je trouve cela moins facile à maintenir.
 */
 
 @use '../styles/slider';

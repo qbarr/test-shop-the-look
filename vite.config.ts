@@ -1,6 +1,6 @@
+import autoprefixer from 'autoprefixer'
 import { defineConfig } from 'vite'
 import shopify from 'vite-plugin-shopify'
-import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
   resolve: {

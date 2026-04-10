@@ -1,3 +1,5 @@
-node_modules
-dist
-build
+/node_modules
+/dist
+/assets/theme-*.css
+/assets/theme-*.js
+/assets/theme-*.js.map
