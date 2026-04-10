@@ -1,7 +1,7 @@
 import { isArray, each, map, invokeMap, defer, mapValues } from 'lodash-es'
 import { TinyEmitter } from 'tiny-emitter'
 
-import { IComponentClass, ModuleMapping, ModulesMappping } from '@/core/modulesMap'
+import { IComponentClass, ModuleEntry, ModuleMap } from '@/core/modulesMap'
 
 export const forceArray = <T>(a: T | T[]) => (isArray(a) ? a : [a])
 export const unforceArray = <T>(a: T[]) => (a.length === 0 ? null : a.length === 1 ? a[0] : a)
@@ -104,7 +104,7 @@ class Component<Type extends BaseComponentType = BaseComponentType> extends Tiny
       }
     }
 
-    each(modulesMap, ([selector, Module]: ModuleMapping, key) => {
+    each(modulesMap, ([selector, Module]: ModuleEntry, key) => {
       if (!Module) return
       const array = map((selector === 'self' ? [this.el] : this.el.querySelectorAll(selector)) as any[], (el) => {
         const alreadyExist = !!forceArray(this.modules?.[key])?.find((m: Component) => m?.el === el)
@@ -124,7 +124,7 @@ class Component<Type extends BaseComponentType = BaseComponentType> extends Tiny
     })
   }
 
-  getModulesMap (): ModulesMappping {
+  getModulesMap (): ModuleMap {
     return {}
   }
 

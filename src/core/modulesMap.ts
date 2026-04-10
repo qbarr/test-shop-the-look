@@ -6,10 +6,10 @@ export interface IComponentClass {
   new (el: HTMLElement, options: any): any
 }
 
-export type ModuleMapping = [string, IComponentClass | null]
-export type ModulesMappping = Record<string, ModuleMapping>
+export type ModuleEntry = [string, IComponentClass | null]
+export type ModuleMap = Record<string, ModuleEntry>
 
-const modulesMap: ModulesMappping = {
+const modulesMap: ModuleMap = {
   slider: ['.slider', Slider]
 }
 
