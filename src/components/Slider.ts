@@ -12,7 +12,7 @@ type SliderRefs = {
  *
  *
  * Fonctionnalités :
- * - Scroll fluide horizontal via boutons
+ * - Scroll horizontal via 2 boutons next/previous
  * - Mise à jour dynamique de l’état lors du scroll utilisateur
  *
  */

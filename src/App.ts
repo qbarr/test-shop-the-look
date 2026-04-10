@@ -5,9 +5,7 @@ import Component from '@/navigation/Component'
 /*
   Classe principale d'initialisation du site
   - Sélectionne et instancie la page appropriée selon le template
-    (idéalement via un PageManager pour un chargement AJAX, mais simplifié ici vu qu'il n'y a qu'une page)
-  - Ajoute les modules permanents de l'application
-  - Effectue un resize initial pour la page et tous les modules
+    (idéalement via un PageManager pour un chargement AJAX, mais simplifié ici vu qu'il n'y a que 2 pages)
 */
 type AppRefs = {
   page?: HTMLElement
