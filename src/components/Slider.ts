@@ -2,9 +2,11 @@ import { bindMethod } from '@/helpers/bind'
 import Component from '@/navigation/Component'
 
 type SliderRefs = {
+  dots?: HTMLElement[]
   prevButton?: HTMLButtonElement
   nextButton?: HTMLButtonElement
   track?: HTMLElement
+  items?: HTMLElement[]
 }
 
 /*
@@ -19,10 +21,16 @@ type SliderRefs = {
 const EDGE_TOLERANCE = 10
 
 class Slider extends Component<{ refs: SliderRefs }> {
+  count: number
+
   initialized () {
     this.bindRefs()
     this.bindEvents()
+    this.count = this.refs.items?.length ?? 1
+    this.el.style.setProperty('--items-count', String(this.count))
     this.updateControls()
+
+    this.emit('ready')
   }
 
   bindEvents (add = true) {
@@ -64,6 +72,15 @@ class Slider extends Component<{ refs: SliderRefs }> {
 
     this.setButtonState(this.refs.prevButton, isAtStart)
     this.setButtonState(this.refs.nextButton, isAtEnd)
+
+    const maxScrollLeft = Math.max(track.scrollWidth - track.clientWidth, 0)
+    const progress = maxScrollLeft > 0 ? scrollLeft / maxScrollLeft : 0
+
+    const currentWidth = this.el.clientWidth / this.count
+    const maxIndicatorOffset = this.el.clientWidth - currentWidth
+    const indicatorOffset = progress * maxIndicatorOffset
+
+    this.el.style.setProperty('--current-offset', `${indicatorOffset}px`)
   }
 
   setButtonState (button: HTMLButtonElement | undefined, isDisabled: boolean) {

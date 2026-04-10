@@ -1,6 +1,6 @@
 {
   "src/entrypoints/theme.scss": {
-    "file": "theme-CGvyMpId.css",
+    "file": "theme-DZJbb4h1.css",
     "name": "theme",
     "names": [
       "theme.css"
@@ -9,7 +9,7 @@
     "isEntry": true
   },
   "src/entrypoints/theme.ts": {
-    "file": "theme-B_KK7rZg.js",
+    "file": "theme-YzHDvLjD.js",
     "name": "theme",
     "src": "src/entrypoints/theme.ts",
     "isEntry": true

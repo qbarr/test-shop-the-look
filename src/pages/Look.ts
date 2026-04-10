@@ -1,24 +1,32 @@
-import { bindMethod } from '@/helpers/bind'
+import Slider from '@/components/Slider'
+import { bindEmitterMethod, bindMethod } from '@/helpers/bind'
 import Page from '@/navigation/Page'
 
-type LookRefs = {
-  lookProducts?: HTMLElement[]
+type LookType = {
+  refs: {
+    lookProducts?: HTMLElement[]
+  }
+  modules: {
+    slider: Slider
+  }
 }
 
 /*
    Gère les interactions de la page "Look".
    Implémente l’action d’ajout groupé au panier
 */
-class Look extends Page<{ refs: LookRefs }> {
+class Look extends Page<LookType> {
   static pageName = 'Look'
 
   bindEvents (add = true) {
     const method = bindMethod(add)
+    const emitterMethod = bindEmitterMethod(add)
     const addAllButton = this.el.querySelector<HTMLButtonElement>('.look__add-all-button')
 
     if (!(addAllButton instanceof HTMLButtonElement)) return
 
     addAllButton[method]('click', this.onAddAllToCart)
+    this.modules.slider[emitterMethod]('ready', () => this.show())
   }
 
   getButtons () {

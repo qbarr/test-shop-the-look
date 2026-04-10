@@ -10,6 +10,7 @@ import modulesMap from '@/core/modulesMap'
 export interface IPage {
   el: HTMLElement
   flush: () => void
+  show: () => void
 }
 
 export interface IPageClass {
@@ -33,6 +34,10 @@ class Page<
   // Retourne la map des modules qu'on peut utiliser sur les pages
   getModulesMap () {
     return { ...modulesMap }
+  }
+
+  show () {
+    this.el.classList.add('ready')
   }
 
   // Nettoie tous les modules liés à cette page

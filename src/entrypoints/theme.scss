@@ -8,6 +8,7 @@ J'aurais normalement importé chaque fichier SCSS dans le JS correspondant
 Je préfère éviter de tout mettre dans le stylesheet Liquid, car je trouve cela moins facile à maintenir.
 */
 
+@use '../styles/globals';
 @use '../styles/slider';
 @use '../styles/look';
 @use '../styles/shop-the-look';

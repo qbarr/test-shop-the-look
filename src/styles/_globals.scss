@@ -1,0 +1,8 @@
+.page {
+  opacity: 0;
+  transition: opacity var(--animation-speed-medium) var(--animation-timing-default);
+
+  &.ready {
+    opacity: 1;
+  }
+}

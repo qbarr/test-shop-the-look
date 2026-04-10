@@ -69,6 +69,10 @@
     display: block;
     width: 100%;
   }
+
+  &::before {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -79,6 +83,21 @@
 
 @media screen and (max-width: 990px) {
   .slider {
+    --items-count: 1;
+
+    &::before {
+      content: '';
+      display: flex;
+      gap: 2rem;
+      position: absolute;
+      bottom: -5px;
+      height: 3px;
+      background: black;
+      justify-content: center;
+      width: calc(100% / var(--items-count));
+      transform: translateX(var(--current-offset, 0));
+    }
+
     &__controls,
     &__track::-webkit-scrollbar {
       display: none;
@@ -87,7 +106,8 @@
     &__track {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      overscroll-behavior: none;
+      overscroll-behavior-x: none;
+      overscroll-behavior-y: auto;
       scrollbar-width: none;
     }
   }

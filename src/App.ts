@@ -13,10 +13,16 @@ type AppRefs = {
 
 class App extends Component<{ refs: AppRefs }> {
   page: IPage
-
+  pageName: string
+  
   initialized () {
     this.bindRefs()
     this.initializePage()
+
+    // Gestion simplifiée de l’affichage des autres pages
+    // Absence de PageManager dans le cadre de l’exercice
+    if (this.pageName !== 'Look')
+      this.page.show()
   }
 
   initializePage () {
@@ -24,6 +30,7 @@ class App extends Component<{ refs: AppRefs }> {
     const pageClassName = this.refs.page?.getAttribute('data-template') || ''
     const PageClass = pageMap[pageClassName] || Page
 
+    this.pageName = PageClass.pageName
     this.page = new PageClass(this.refs.page)
   }
 }
