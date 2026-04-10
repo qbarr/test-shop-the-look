@@ -1,0 +1,53 @@
+{%- doc -%}
+  Renders a generic image slider.
+
+  @param {object} images - Images to render in the slider.
+  @param {string} title - Title used as fallback alt text.
+{%- enddoc -%}
+
+{%- if images != blank -%}
+  <div class="slider" aria-label="{{ 'accessibility.slideshow' | t }}">
+    {%- if images.size > 1 -%}
+      <div class="slider__controls">
+        <button
+          type="button"
+          class="button-unstyled slider__button slider__button--prev"
+          data-ref="prevButton"
+          aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+        >
+          <span aria-hidden="true" class="svg-wrapper">
+            {{- 'icon-chevron-left.svg' | inline_asset_content -}}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="button-unstyled slider__button slider__button--next"
+          data-ref="nextButton"
+          aria-label="{{ 'accessibility.slideshow_next' | t }}"
+        >
+          <span aria-hidden="true" class="svg-wrapper">
+            {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
+    {%- endif -%}
+
+    <div class="slider__track" data-ref="track" tabindex="0">
+      <ul class="slider__list" role="list">
+        {%- for slider_image in images -%}
+          {%- liquid
+            assign image = slider_image.preview_image | default: slider_image
+            assign image_alt = image.alt | default: title
+          -%}
+
+          {%- if image != blank -%}
+            <li class="slider__item" data-refs="items">
+              {% render 'image', image: image, class: 'slider__image', text_fallback: image_alt %}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+{%- endif -%}

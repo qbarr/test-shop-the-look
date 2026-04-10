@@ -1,0 +1,70 @@
+{% liquid
+  assign alt = image.alt | default: image.name | default: 'Image'
+  assign loading = loading | default: 'eager'
+  assign sizeSet = sizeSet | default: '256,512,1024,2048' | split: ','
+  assign defaultWidth = defaultWidth | default: 1024
+  assign breakpoint = breakpoint | default: 900
+
+  assign sizes = size | default: '100vw'
+  if sizeMobile
+    assign sizes = '(max-width: ' | append: breakpoint | append: 'px) ' | append: sizeMobile | append: ', ' | append: size
+  endif
+
+  for size in sizeSet
+      assign sizeSrc = image.src | image_url: width: size | append: ' ' | append: size | append: 'w'
+      if forloop.index0 != 0
+      assign sizeSrc = sizeSrc | prepend: ', '
+      endif
+
+      assign srcset = srcset | append: sizeSrc
+
+      if image_mobile
+        assign sizeSrcMobile = image_mobile.src | image_url: width: size | append: ' ' | append: size | append: 'w'
+
+        if forloop.index0 != 0
+        assign sizeSrc = sizeSrc | prepend: ', '
+        endif
+
+        assign srcsetMobile = srcsetMobile | append: sizeSrcMobile
+      endif
+
+  endfor
+%}
+{% if image_mobile or force_picture %}
+  <picture width="{{ image_mobile.width }}" height="{{ image_mobile.height }}"
+  class="{{ class }}"
+  {{ attributes }}
+  >
+    {% if image_mobile %}
+      <source srcset="{{ srcsetMobile }}" media="(max-width: {{ breakpoint }}px)">
+    {% endif %}
+    <source
+      srcset="{{ srcset }}"
+      {% if image_mobile %}
+        media="(min-width: {{ breakpoint | plus: 1 }}px)"
+      {% endif %}
+    >
+    <img
+      width="{{ image.width }}"
+      height="{{ image.height }}"
+      alt="{{ alt }}"
+      sizes="{{ sizes }}"
+      srcset="{{ srcset }}"
+      src="{{ image.src | image_url: width: defaultWidth }}"
+      loading="{{ loading }}"
+      {{ attributes }}
+    >
+  </picture>
+{% else %}
+<img
+  width="{{ image.width }}"
+  height="{{ image.height }}"
+  alt="{{ alt }}"
+  srcset="{{ srcset }}"
+  src="{{ image.src | image_url: width: defaultWidth }}"
+  sizes="{{ sizes }}"
+  class="{{ class }}"
+  loading="{{ loading }}"
+  {{ attributes }}
+>
+{% endif %}

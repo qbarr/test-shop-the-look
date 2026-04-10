@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/*.scss"
+      ],
+      "customSyntax": "postcss-scss"
+    }
+  ],
+  "rules": {
+    "alpha-value-notation": null,
+    "custom-property-pattern": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "media-feature-range-notation": null,
+    "selector-class-pattern": null,
+    "value-keyword-case": null
+  }
+}

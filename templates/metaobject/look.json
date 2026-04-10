@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-look",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding-block-start": 40,
+        "padding-block-end": 80,
+        "show_add_all_button": true,
+        "add_all_label": "Add all to cart"
+      }
+    }
+  },
+  "order": ["main"]
+}

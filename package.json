@@ -1,0 +1,29 @@
+{
+  "name": "test-store-shopify-horizon",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "shopify": "npx shopify theme dev --store=test-store-1100000000000000000000000000000004729.myshopify.com -x=\"*.scss\"",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.10.2",
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.8.1",
+    "sass-embedded": "^1.99.0",
+    "stylelint": "^17.6.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "vite-plugin-shopify": "^4.1.2"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.27",
+    "lodash-es": "^4.18.1",
+    "tiny-emitter": "^2.1.0"
+  }
+}

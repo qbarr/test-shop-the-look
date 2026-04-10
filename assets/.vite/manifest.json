@@ -1,0 +1,17 @@
+{
+  "src/entrypoints/theme.js": {
+    "file": "theme-DeoacA2U.js",
+    "name": "theme",
+    "src": "src/entrypoints/theme.js",
+    "isEntry": true
+  },
+  "src/entrypoints/theme.scss": {
+    "file": "theme-n5bczW0d.css",
+    "name": "theme",
+    "names": [
+      "theme.css"
+    ],
+    "src": "src/entrypoints/theme.scss",
+    "isEntry": true
+  }
+}

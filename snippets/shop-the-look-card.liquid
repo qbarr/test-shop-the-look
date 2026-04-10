@@ -1,0 +1,40 @@
+{%- liquid
+  assign look_title = look.title.value | default: look.system.handle
+  assign look_url = look.system.url
+  assign primary_image = look.gallery.value
+
+  if primary_image != blank and primary_image.size
+    assign primary_image = primary_image | first
+  endif
+
+  assign primary_image = primary_image.preview_image | default: primary_image
+-%}
+
+{%- capture card_content -%}
+  <div class="shop-the-look__media">
+    {%- if primary_image != blank -%}
+      {% render 'image', image: primary_image, class: 'shop-the-look__image' %}
+    {%- else -%}
+      <div aria-hidden="true" class="shop-the-look__placeholder">
+        {{- look_title | escape | truncate: 60 -}}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <h3 class="shop-the-look__title paragraph">
+    {{- look_title | escape -}}
+  </h3>
+
+{%- endcapture -%}
+
+<li class="shop-the-look__item">
+  {%- if look_url != blank -%}
+    <a class="shop-the-look__card" href="{{ look_url }}">
+      {{- card_content -}}
+    </a>
+  {%- else -%}
+    <article class="shop-the-look__card">
+      {{- card_content -}}
+    </article>
+  {%- endif -%}
+</li>

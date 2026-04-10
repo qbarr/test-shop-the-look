@@ -1,0 +1,125 @@
+{%- assign looks = shop.metaobjects.look.values -%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section section--full-width-margin color-{{ section.settings.color_scheme }}">
+  <div
+    class="spacing-style section-content-wrapper"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    <section class="shop-the-look">
+      {%- if looks == blank -%}
+        <p class="shop-the-look__empty paragraph">
+          {{- section.settings.empty_text | default: 'No looks available.' -}}
+        </p>
+      {%- else -%}
+        <ul
+          class="shop-the-look__grid {% if section.settings.mobile_product_card_size == 'large' %} shop-the-look__grid--mobile-large{% endif %}"
+          role="list"
+          style="--shop-the-look-column-gap: {{ section.settings.columns_gap_horizontal }}px; --shop-the-look-row-gap: {{ section.settings.columns_gap_vertical }}px;"
+        >
+          {%- for look in looks -%}
+            {% render 'shop-the-look-card', look: look %}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop the look (listing)",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty state text",
+      "default": "No looks available."
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_product_card_size",
+      "label": "t:settings.mobile_card_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_horizontal",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_vertical",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "presets": [
+    {
+      "name": "Shop the look (listing)",
+      "category": "t:categories.storytelling"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,146 @@
+{%- liquid
+  assign look = metaobject | default: section.settings.look
+  assign look_id = section.id
+  assign look_gallery = blank
+  assign products = blank
+  assign heading_tag = 'h2'
+
+  if look != blank
+    assign look_title = look.title.value | default: look.system.handle
+    assign look_subtitle = look.subtitle.value
+    assign look_id = look.system.id | default: look.id | default: section.id
+    assign look_gallery = look.gallery.value
+  endif
+
+  if template.name == 'metaobject' and template.suffix == 'look'
+    assign heading_tag = 'h1'
+  endif
+
+  if look != blank
+    assign products = look.products.value
+  endif
+-%}
+
+<div class="section section--full-width-margin color-{{ section.settings.color_scheme }}">
+  <div
+    class="spacing-style section-content-wrapper"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    <section
+      class="look{% if look_gallery == blank %} look--without-media{% endif %}"
+      {% if look != blank %}
+        aria-labelledby="ShopTheLookTitle-{{ look_id }}"
+      {% endif %}
+    >
+      {%- if look == blank -%}
+        <p class="look__empty paragraph">
+          {{- 'content.no_results_found' | t -}}
+        </p>
+      {%- else -%}
+        {%- if look_gallery != blank -%}
+          <div class="look__media">
+            {% render 'slider', images: look_gallery, title: look_title %}
+          </div>
+        {%- endif -%}
+
+        <div class="look__content">
+          <div class="look__header">
+            <{{ heading_tag }} id="ShopTheLookTitle-{{ look_id }}" class="h2">
+              {{- look_title | escape -}}
+            </{{ heading_tag }}>
+
+            {%- if look_subtitle != blank -%}
+              <p class="look__subtitle paragraph">
+                {{- look_subtitle | escape | newline_to_br -}}
+              </p>
+            {%- endif -%}
+          </div>
+
+          {%- if products != blank -%}
+            <ul class="look__product-list" role="list">
+              {%- for product in products -%}
+                {% render 'look-product', product: product, section_id: section.id %}
+              {%- endfor -%}
+            </ul>
+
+            {%- if section.settings.show_add_all_button -%}
+              <button
+                type="button"
+                class="button look__add-all-button"
+                aria-disabled="false"
+                aria-busy="false"
+              >
+                {{- section.settings.add_all_label -}}
+              </button>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop the look (detail)",
+  "class": "section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Look source"
+    },
+    {
+      "type": "metaobject",
+      "id": "look",
+      "label": "Look",
+      "metaobject_type": "look",
+      "info": "Only used when this section is added to non-metaobject pages."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_all_button",
+      "label": "Show “add all to cart” button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "add_all_label",
+      "label": "Add all button label",
+      "default": "Add all to cart"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

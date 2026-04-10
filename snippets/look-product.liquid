@@ -1,0 +1,99 @@
+{%- doc -%}
+  Renders a product row for a look detail.
+
+  @param {object} product - Product object.
+  @param {string} section_id - Parent section id.
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign product_media = variant.featured_media
+  assign product_url = variant.url | default: product.url
+  assign can_add_to_cart = false
+  assign add_to_cart_text = 'products.product.unavailable' | t
+
+  if product_media == blank
+    assign product_media = product.featured_media
+  endif
+
+  if variant and variant.available
+    assign can_add_to_cart = true
+    assign add_to_cart_text = 'products.product.add_to_cart' | t
+  else
+    assign add_to_cart_text = 'products.product.sold_out' | t
+  endif
+
+  assign product_form_id = 'LookProductForm-' | append: section_id | append: '-' | append: product.id
+-%}
+
+<li
+  class="look-product"
+  data-refs="lookProducts"
+>
+  <a
+    class="look-product__media look-product__link"
+    href="{{ product_url }}"
+    ref="productLink"
+    aria-label="{{ product.title | escape }}"
+  >
+    {%- if product_media != blank -%}
+      {%- render 'product-media',
+        media: product_media,
+        preview_image_only: true,
+        loading: 'lazy',
+        widths: '240, 352, 832',
+        sizes: 'auto'
+      -%}
+
+    {%- else -%}
+      <div aria-hidden="true" class="look-product__media-placeholder">
+        {{- product.title | truncate: 60 -}}
+      </div>
+    {%- endif -%}
+  </a>
+
+  <a class="look-product__title look-product__link" href="{{ product_url }}">
+    {{- product.title | escape -}}
+  </a>
+
+  <div class="look-product__price">
+    {% render 'price', product_resource: product, show_unit_price: true %}
+  </div>
+
+  <product-form-component
+    data-section-id="{{ section_id }}"
+    data-product-id="{{ product.id }}"
+    data-product-url="{{ product.url }}"
+    data-quantity-default="1"
+    on:submit="/handleSubmit"
+    class="look-product__form-wrapper"
+  >
+    <div
+      class="visually-hidden"
+      aria-live="assertive"
+      role="status"
+      aria-atomic="true"
+      ref="liveRegion"
+    ></div>
+    {%- form 'product', product, id: product_form_id, class: 'look-product__form', data-type: 'add-to-cart-form' -%}
+      <input
+        type="hidden"
+        name="id"
+        ref="variantId"
+        value="{{ variant.id }}"
+      >
+      <input
+        type="hidden"
+        name="quantity"
+        value="1"
+      >
+
+      {% render 'add-to-cart-button',
+        add_to_cart_text: add_to_cart_text,
+        class: 'add-to-cart-button button',
+        can_add_to_cart: can_add_to_cart,
+        product: product
+      %}
+    {%- endform -%}
+  </product-form-component>
+</li>
