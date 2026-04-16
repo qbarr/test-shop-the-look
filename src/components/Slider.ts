@@ -2,7 +2,6 @@ import { bindMethod } from '@/helpers/bind'
 import Component from '@/navigation/Component'
 
 type SliderRefs = {
-  dots?: HTMLElement[]
   prevButton?: HTMLButtonElement
   nextButton?: HTMLButtonElement
   track?: HTMLElement

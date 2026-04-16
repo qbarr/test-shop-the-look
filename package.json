@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "shopify": "npx shopify theme dev --store=test-store-1100000000000000000000000000000004729.myshopify.com -x=\"*.scss\"",
-    "prepare": "husky"
+    "shopify": "npx shopify theme dev --store=test-store-1100000000000000000000000000000004729.myshopify.com -x=\"*.scss\""
   },
   "devDependencies": {
     "@shopify/prettier-plugin-liquid": "^1.10.2",
